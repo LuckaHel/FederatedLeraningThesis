@@ -22,7 +22,7 @@ The model is based on a **2-layer perceptron**, and it utilizes **Federated Aver
 Ensure you have Python installed on your system. Then, install the required dependencies listed in `requirements.txt`:
 ```bash
 pip install -r requirements.txt
-
+```
 ### 2️⃣ Run the Server
 
 Start the Federated Learning server by running:
