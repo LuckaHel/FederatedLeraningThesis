@@ -17,9 +17,12 @@ The model is based on a **2-layer perceptron**, and it utilizes **Federated Aver
 ## 🚀 Getting Started
 
 ### 1️⃣ Install Dependencies
+
 Ensure you have Python installed on your system. Then, install the required dependencies listed in `requirements.txt`:
+
 ```bash
 pip install -r requirements.txt
+
 ## 🖥 How to Run the Code
 
 ### Running the Server
