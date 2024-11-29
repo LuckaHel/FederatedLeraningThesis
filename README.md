@@ -26,6 +26,7 @@ pip install -r requirements.txt
 ### 2️⃣ Run the Server
 
 Start the Federated Learning server by running:
+
 ```bash
 python server1.py
 ```
@@ -33,7 +34,7 @@ python server1.py
 
 You can either:
 
-    **Run individual clients manually:**
+ **Run individual clients manually:**
 ```bash
 python clientX.py
 ```
@@ -41,8 +42,8 @@ python clientX.py
 
 **Use the runAllClients.py script to start multiple clients:**
 
-    Open runAllClients.py and specify which clients to run.
-    Execute the script:
+ Open runAllClients.py and specify which clients to run.
+ Execute the script:
 ```bash
         python runAllClients.py
 ```
