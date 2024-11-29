@@ -52,28 +52,27 @@ Modifying Client Numbers
 
 If you need to change the number of clients:
 
-    Open the server1.py file in any text editor.
-    Locate the section where the minimum and maximum number of clients are defined.
-    Adjust these values to match your desired setup.
+Open the server1.py file in any text editor.
+ Locate the section where the minimum and maximum number of clients are defined.
+Adjust these values to match your desired setup.
 
 Notes for Running Clients
+-The server must be running before starting any client scripts.
+-Ensure the client IDs specified in runAllClients.py correspond to the actual client files (e.g., client1.py, client2.py).
 
-    The server must be running before starting any client scripts.
-    Ensure the client IDs specified in runAllClients.py correspond to the actual client files (e.g., client1.py, client2.py).
-the specified clients automatically.
 
 ## 🔍 Troubleshooting
 **Common Issues**
 
-    Server not detecting clients:
-        Ensure the server is running before starting the clients.
-        Verify that the client scripts are correctly named and correspond to the server's configuration.
+Server not detecting clients:
+Ensure the server is running before starting the clients.
+Verify that the client scripts are correctly named and correspond to the server's configuration.
 
-    Dependency errors:
-        Ensure all required packages are installed by running:
+Dependency errors:
+Ensure all required packages are installed by running:
 ```bash
         pip install -r requirements.txt
 ```
-    Client connections failing:
-        Check your network configuration to ensure the server and clients can communicate.
+Client connections failing:
+Check your network configuration to ensure the server and clients can communicate.
 
