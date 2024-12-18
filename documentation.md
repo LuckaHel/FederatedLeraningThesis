@@ -282,3 +282,39 @@ A set of JSON files saved in the `output_folder` with the following transformati
 
 4. **Save Results**:
    - Saves the processed JSON to the `output_folder` with the same filename as the input file.
+   
+   
+   
+# Project Contributions
+
+## Matej Labaj
+- **Facilitated the Rehapiano examination**: Collected relevant data and managed the process.
+- **Developed visualization code**: Created code to visualize the maximum force exerted by fingers, providing a clear representation of the data.
+- **Identified and mapped fingers**: Accurately identified and mapped individual fingers in the data set.
+- **Integrated data with subject codes**: Linked the subjects' code with their corresponding data.
+- **Wrote documentation**: Documented the visualization and integration processes.
+- **Calculated maximum compression force**:  
+  - For the left and right hands, determined as the average of a 5-second measurement.  
+  - For individual fingers, determined as the average of a 5-second measurement.
+
+## Lucia Helmeciova
+- **Communicated with stakeholders**: Acted as the main point of contact with Jan Magyar, gathering detailed information on data specifications and requirements.
+- **Wrote reaction offset code**: Implemented calculations for:  
+  - Average reaction speed for each finger.  
+  - Reaction success rate for each finger.
+- **Refactored codebase**: Improved code readability and maintainability.
+- **Integrated data with subject codes**: Worked on connecting the subjects' code with their corresponding data.
+- **Wrote documentation**: Documented reaction offset calculations and refactoring process.
+
+## Tomáš Gamrat
+- **Processed examination data**: Wrote code to process data from the examination.
+- **Designed candlestick diagrams**: Created visual representations of data trends and anomalies.
+- **Performed data processing tasks**:  
+  - Processed binary data.  
+  - Loaded and processed JSON data.  
+  - Established connections between subject codes and their associated data.
+- **Communicated with stakeholders**: Worked closely with Maroš Hliboký and Jan Magyar on data handling and project requirements.
+- **Calculated maximum compression force**:  
+  - For the left and right hands, determined as the average of a 5-second measurement.  
+  - For individual fingers, determined as the average of a 5-second measurement.
+
