@@ -1,102 +1,194 @@
-Revised Thesis Outline
-1. Introduction
+focuses on categorizing FL approaches in regards of optimiying the accuracy based on dataset .... https://ieeexplore.ieee.org/abstract/document/9743558, useful for nomenclature and some advice on normalization, what are the drawbacks of FEDavg..
 
-    Context and Motivation:
-        Brief introduction to federated learning (FL) and its applications.
-        Importance of personality traits in NLP and potential implications for social robotics.
-    Research Gap:
-        Limited exploration of personality diversity (e.g., introversion vs. extraversion) in FL setups.
-    Thesis Objectives:
-        Conduct experiments using the MBTI9k dataset to analyze personality traits in FL.
-        Evaluate the impact of client distribution by personality type (e.g., introverts vs. extroverts) on model performance.
-    Structure Overview:
-        Summarize the thesis chapters.
+
+
+
+
+Revised Thesis Outline
+
+
+
+
+1. Introduction
+https://www.arxiv.org/pdf/2410.21547 good for citing the description of federative learning
+
+1.1 Background and Context
+
+Brief introduction to federated learning (FL) and its significance in machine learning.
+
+The role of FL in distributed systems and its relevance to social robotics.
+
+Current challenges in FL and personality-based data analysis.
+
+fedeated lerning intro + challenges of federative lerning https://arxiv.org/pdf/2101.05428
+chanllenges like online enviroment https://www.arxiv.org/pdf/2410.21547
+benchmarkin federative leraning https://arxiv.org/pdf/2104.08815 testet on some dataset.... can compare maybe 
+maybe i can use distil bert for my setup https://arxiv.org/pdf/2104.08815
+
+1.2 Research Problem
+
+Identify gaps in existing federated learning frameworks.
+
+Highlight the need for studying personality traits (e.g., introversion vs. extraversion) in FL settings.
+
+Relevance of FL in enabling personalized and adaptive robotic interactions, conect it with security issues.
+ 
+Outline the chapters and their contributions to achieving the research objectives.
+
+
+
 
 2. Literature Review
 
-    Federated Learning:
-        Overview: Principles, applications, and challenges.
-        Prior work on FL in NLP and distributed systems.
-    Personality and NLP:
-        MBTI: Relevance, limitations, and linguistic patterns.
-        Prior work on MBTI-based personality prediction from text (e.g., Reddit datasets).
-    Social Robotics:
-        Importance of personality analysis in adaptive robotics.
-        How personality-focused NLP tasks can enhance human-robot interaction.
-    Gaps and Opportunities:
-        Lack of research integrating FL with personality-based NLP tasks.
+2.1 Overview of Federated Learning
+
+Principles, advantages, and challenges of FL.
+
+Overview of key FL frameworks (FATE, Flower, PySyft, OpenFL, TFF).
+
+2.2 Personality Analysis in NLP
+
+Introduction to personality traits (MBTI, Big Five) and their linguistic markers.
+
+Applications of personality analysis in machine learning and social robotics.
+
+Existing datasets for personality prediction (e.g., MBTI9k).
+
+2.3 FL Applications in Social Robotics
+
+Case studies of FL in robotics and adaptive systems.
+
+Importance of personality modeling for enhancing human-robot interaction.
+
+2.4 Research Gaps and Opportunities
+
+Lack of studies integrating FL with personality datasets.
+
+Limited exploration of personality-based data in FL scalability and performance.
+
+
+
+
+
 
 3. Dataset
 
-    MBTI9k Dataset:
-        Detailed description of dataset structure, labels, and linguistic features.
-        Strengths: Large scale, rich text data, and personality labels.
-        Limitations: Binary MBTI traits, platform bias, and non-representative demographics.
-    Justification for Use:
-        Why MBTI9k is sufficient for personality-based FL experiments.
-        Its unique combination of personality data and textual content.
+3.1 MBTI9k Dataset
+
+Description of dataset structure, personality labels, and linguistic features.
+
+Strengths and limitations of MBTI9k for FL tasks.
+
+3.2 Dataset Preprocessing
+
+Steps to clean, normalize, and split the MBTI9k dataset.
+
+Approach to dividing data by personality types (e.g., introverts vs. extroverts).
+
+3.3 Challenges
+
+Biases in Reddit-based data.
+
+Limitations of MBTI as a psychological framework.
+
+
+
 
 4. Methodology
 
-    Federated Learning Setup:
-        Framework: Use of Flower for client-server architecture.
-        Dataset Preprocessing: Steps to prepare MBTI9k for FL experiments.
-        Client Simulations:
-            Division by personality traits (e.g., introverts vs. extroverts).
-            Randomized and stratified sampling for client data.
-    Experiment Design:
-        Impact of Client Numbers:
-            Evaluate model performance with varying numbers of clients.
-        Personality-Specific Training:
-            Train models with data from introverts, extroverts, and mixed groups.
-        Feature-Based Experiments:
-            Assess the contribution of linguistic features (e.g., LIWC, n-grams) to predictions.
-    Evaluation Metrics:
-        Accuracy, precision/recall, F1-score.
-        Communication efficiency and convergence rates in FL.
+4.1 Federated Learning Framework
 
-5. Implementation
+Justification for choosing the Flower framework.
 
-    FL Framework: Details of Flower setup and selected model architecture.
-    Training Configuration:
-        Hardware and software details.
-        Hyperparameters, iterations, and training steps.
-    Challenges and Solutions:
-        Scalability, preprocessing large datasets, and client distribution issues.
+Description of the federated learning setup.
 
-6. Results
+4.2 Experimental Design
 
-    Experiment Outcomes:
-        Analysis of client-number scalability.
-        Model performance comparison: introverts vs. extroverts.
-        Insights from feature-specific experiments.
-    Visualization:
-        Graphs and tables to showcase key results.
-    Interpretation:
-        What the results reveal about personality-focused FL.
+Experiment 1: Impact of client numbers on model performance.
 
-7. Discussion
+Experiment 2: Personality-specific training (introverts vs. extroverts).
 
-    Findings:
-        Implications for federated learning with personality traits.
-        How introvert/extrovert-specific training impacts performance.
-    Limitations:
-        Constraints of using MBTI data alone.
-        Platform-specific and demographic biases.
-    Future Work:
-        Suggest expanding the dataset scope to include more diverse data sources.
-        Propose integrating Big Five personality traits for broader applicability.
+Experiment 3: Mixed-client training and generalization.
 
-8. Conclusion
+Experiment 4: Feature ablation study to identify critical linguistic features.
 
-    Recap of the research objectives and findings.
-    Contributions to the fields of federated learning and personality-based NLP.
-    Closing thoughts on the potential of personality analysis in social robotics.
+4.3 Evaluation Metrics
 
-Adjustments Without PANDORA
+Accuracy, precision, recall, and F1-score.
 
-    The focus shifts entirely to leveraging the MBTI9k dataset, which remains a robust dataset for personality-focused analysis.
-    Highlight the dataset's text-rich content as a unique advantage, compensating for the lack of Big Five data.
-    Strengthen the argument by emphasizing the scalability of experiments and the potential insights derived from introvert/extrovert analyses.
+Communication efficiency and convergence rates in FL.
 
-Let me know if this version fits your needs or if you'd like further refinementss
+4.4 Implementation Details
+
+Technical description of the Flower framework setup.
+
+Hardware and software configurations.
+
+Hyperparameter tuning.
+
+
+
+
+
+
+5. Results
+
+5.1 Experiment Outcomes
+
+Detailed presentation of results for each experiment.
+
+Visualizations: Graphs, tables, and charts.
+
+5.2 Cross-Personality Analysis
+
+Comparison of model performance on introvert- and extrovert-specific data.
+
+Insights into linguistic differences between personality types.
+
+5.3 Feature Contribution Analysis
+
+Impact of key features on personality predictions.
+
+Results of the feature ablation study.
+
+
+
+
+6. Discussion
+
+6.1 Interpretation of Results
+
+Implications of findings for federated learning and personality analysis.
+
+Insights into scalability, client diversity, and dataset characteristics.
+
+6.2 Relevance to Social Robotics
+
+How personality-based FL can enhance robotic interactions.
+
+Potential applications in adaptive and personalized robotics.
+
+6.3 Limitations
+
+Dataset biases and representational challenges.
+
+Technical and computational constraints.
+
+6.4 Future Work
+
+Expanding to multilingual personality datasets.
+
+Integrating Big Five traits for broader applicability.
+
+Enhancing FL frameworks with advanced privacy mechanisms.
+
+
+
+
+7. Conclusion
+
+Recap of research objectives and achievements.
+
+Contributions to federated learning and social robotics.
+
+Final reflections on the potential of personality-based FL systems.
