@@ -4,6 +4,7 @@ import torch.nn as nn
 from transformers import DistilBertModel, DistilBertTokenizer
 from sklearn.metrics import precision_score, recall_score, f1_score
 from torch.utils.data import DataLoader, TensorDataset
+import torch.nn.functional as F
 from datasets import load_dataset
 
 # Define the model
@@ -16,7 +17,8 @@ class DistilBERTClassifier(nn.Module):
     def forward(self, input_ids, attention_mask):
         outputs = self.bert(input_ids=input_ids, attention_mask=attention_mask)
         pooled_output = outputs.last_hidden_state[:, 0, :]  # CLS token
-        return torch.sigmoid(self.classifier(pooled_output))
+        return torch.sigmoid(self.classifier(pooled_output))  # Use sigmoid for multi-label tasks
+
 
 # Create a test dataset
 def load_imdb_subset(tokenizer, batch_size=16, subset_size=100):
@@ -36,6 +38,7 @@ def load_imdb_subset(tokenizer, batch_size=16, subset_size=100):
     test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
 
     return train_loader, test_loader
+
 
 # Evaluation function
 def get_eval_fn(tokenizer, model):
@@ -58,17 +61,23 @@ def get_eval_fn(tokenizer, model):
 
         with torch.no_grad():
             for input_ids, attention_mask, targets in test_loader:
+                # Convert targets to one-hot encoded format
+                # Ensure targets have the correct shape [batch_size, num_classes]
+                targets = F.one_hot(targets.squeeze(-1).to(torch.int64), num_classes=16).float()
+
+
+                # Forward pass
                 outputs = model(input_ids, attention_mask)
                 loss += criterion(outputs, targets).item()
-                correct += (outputs.round() == targets).sum().item()
+                correct += (outputs.argmax(dim=1) == targets.argmax(dim=1)).sum().item()
                 total += len(targets)
 
-                all_outputs.extend(outputs.round().cpu().numpy())
-                all_targets.extend(targets.cpu().numpy())
+                all_outputs.extend(outputs.argmax(dim=1).cpu().numpy())
+                all_targets.extend(targets.argmax(dim=1).cpu().numpy())
 
-        precision = precision_score(all_targets, all_outputs, zero_division=1)
-        recall = recall_score(all_targets, all_outputs, zero_division=1)
-        f1 = f1_score(all_targets, all_outputs, zero_division=1)
+        precision = precision_score(all_targets, all_outputs, average="weighted", zero_division=1)
+        recall = recall_score(all_targets, all_outputs, average="weighted", zero_division=1)
+        f1 = f1_score(all_targets, all_outputs, average="weighted", zero_division=1)
         accuracy = correct / total
 
         print(f"Evaluation - Loss: {loss:.4f}, Accuracy: {accuracy:.4f}, Precision: {precision:.4f}, Recall: {recall:.4f}, F1: {f1:.4f}")
@@ -76,11 +85,12 @@ def get_eval_fn(tokenizer, model):
 
     return evaluate
 
+
 # Start the server
 print("Loading tokenizer and initializing model...")
 tokenizer = DistilBertTokenizer.from_pretrained("distilbert-base-uncased")
 bert_model = DistilBertModel.from_pretrained("distilbert-base-uncased")
-model = DistilBERTClassifier(bert_model, output_size=1)
+model = DistilBERTClassifier(bert_model, output_size=16)
 
 print("Setting up Flower server...")
 strategy = fl.server.strategy.FedAvg(

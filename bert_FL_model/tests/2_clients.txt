@@ -1,0 +1,28 @@
+    FL Server Implementation:
+        Set up a Flower FL server using the FedAvg strategy with two clients.
+        Defined an evaluation function to:
+            Evaluate the global model on test data.
+            Convert targets to one-hot encoding to match the model output shape.
+            Compute loss, accuracy, precision, recall, and F1 score.
+        Fixed target shape mismatches by ensuring targets match the model output size ([batch_size, 16]).
+
+    Model Training and Evaluation:
+        Completed one round of FL training with two clients.
+        Metrics after one round:
+            Loss: 0.7384
+            Accuracy: 86.00%
+            F1 Score: 92.47%
+            Precision: 100.00%
+            Recall: 86.00%
+        Observed high precision, which may indicate potential overfitting.
+
+    Performance Challenges:
+        Training took ~2.5 hours for one round, highlighting the need for optimization.
+        Addressed warnings related to metric aggregation by implementing centralized metrics aggregation in the server.
+
+3️⃣ Lessons Learned:
+
+    The FL framework (Flower) effectively trains a global DistilBERT model using distributed clients.
+    One-hot encoding ensures compatibility between model outputs and multi-class labels.
+    Managing tensor shapes and maintaining compatibility between clients and the server is crucial in FL setups.
+    Training time can be a significant bottleneck in FL experiments with large models like DistilBERT.
