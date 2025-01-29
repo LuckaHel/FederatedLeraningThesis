@@ -5,7 +5,7 @@ from transformers import DistilBertModel, DistilBertTokenizer
 from sklearn.metrics import precision_score, recall_score, f1_score
 from torch.utils.data import DataLoader, TensorDataset
 import torch.nn.functional as F
-from datasets import load_dataset
+
 
 # Define the model
 class DistilBERTClassifier(nn.Module):
@@ -20,29 +20,23 @@ class DistilBERTClassifier(nn.Module):
         return torch.sigmoid(self.classifier(pooled_output))  # Use sigmoid for multi-label tasks
 
 
-# Create a test dataset
-def load_imdb_subset(tokenizer, batch_size=16, subset_size=100):
-    dataset = load_dataset("imdb")
-    train_texts = dataset["train"]["text"][:subset_size]
-    train_labels = torch.tensor(dataset["train"]["label"][:subset_size], dtype=torch.float32).unsqueeze(1)
-    test_texts = dataset["test"]["text"][:subset_size]
-    test_labels = torch.tensor(dataset["test"]["label"][:subset_size], dtype=torch.float32).unsqueeze(1)
+# Load custom test data
+def load_test_data(batch_size=16):
+    test_data = torch.load("test_data.pth")
+    test_input_ids = test_data["input_ids"]
+    test_attention_mask = test_data["attention_mask"]
+    test_labels = test_data["labels"]
 
-    train_encodings = tokenizer(train_texts, truncation=True, padding=True, max_length=128, return_tensors="pt")
-    test_encodings = tokenizer(test_texts, truncation=True, padding=True, max_length=128, return_tensors="pt")
-
-    train_dataset = TensorDataset(train_encodings["input_ids"], train_encodings["attention_mask"], train_labels)
-    test_dataset = TensorDataset(test_encodings["input_ids"], test_encodings["attention_mask"], test_labels)
-
-    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
+    # Create test dataset and DataLoader
+    test_dataset = TensorDataset(test_input_ids, test_attention_mask, test_labels)
     test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
-
-    return train_loader, test_loader
+    return test_loader
 
 
 # Evaluation function
-def get_eval_fn(tokenizer, model):
-    _, test_loader = load_imdb_subset(tokenizer)
+def get_eval_fn(model):
+    # Load the test dataset
+    test_loader = load_test_data()
 
     def evaluate(server_round, parameters, config):
         print(f"Evaluating global model at round {server_round}")
@@ -61,10 +55,13 @@ def get_eval_fn(tokenizer, model):
 
         with torch.no_grad():
             for input_ids, attention_mask, targets in test_loader:
-                # Convert targets to one-hot encoded format
                 # Ensure targets have the correct shape [batch_size, num_classes]
-                targets = F.one_hot(targets.squeeze(-1).to(torch.int64), num_classes=16).float()
+                if targets.ndim > 2:
+                    targets = targets.squeeze(-1)  # Remove extra dimensions if any
 
+                # One-hot encode targets if necessary
+                if targets.shape[1] != 16:  # If not already one-hot encoded
+                    targets = F.one_hot(targets.to(torch.int64), num_classes=16).float()
 
                 # Forward pass
                 outputs = model(input_ids, attention_mask)
@@ -94,7 +91,9 @@ model = DistilBERTClassifier(bert_model, output_size=16)
 
 print("Setting up Flower server...")
 strategy = fl.server.strategy.FedAvg(
-    min_fit_clients=2, min_available_clients=2, evaluate_fn=get_eval_fn(tokenizer, model)
+    min_fit_clients=2,
+    min_available_clients=2,
+    evaluate_fn=get_eval_fn(model)
 )
 
 print("Starting the Flower server...")
