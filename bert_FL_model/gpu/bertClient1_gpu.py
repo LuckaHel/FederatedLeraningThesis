@@ -26,18 +26,17 @@ class DistilBERTClassifier(nn.Module):
         pooled_output = outputs.last_hidden_state[:, 0, :]
         return torch.softmax(self.classifier(pooled_output), dim=1)  # ✅ Use softmax for multi-class classification
 
-# Load Dataset
-def load_imdb_subset(tokenizer, batch_size=2, subset_size=100):
-    dataset = load_dataset("imdb")
-    train_texts = dataset["train"]["text"][:subset_size]
-    train_labels = torch.tensor(dataset["train"]["label"][:subset_size], dtype=torch.long).to(device)
+def load_custom_dataset(batch_size=16):
+    train_data = torch.load("pth_data/dataset_train.pth")
 
-    train_encodings = tokenizer(train_texts, truncation=True, padding=True, max_length=128, return_tensors="pt")
-    train_labels = torch.nn.functional.one_hot(train_labels, num_classes=16).float()  # ✅ One-hot encode labels
+    train_input_ids = train_data["input_ids"].to(device)
+    train_attention_mask = train_data["attention_mask"].to(device)
+    train_labels = train_data["labels"].to(device)  # Already one-hot encoded
 
-    train_dataset = TensorDataset(train_encodings["input_ids"], train_encodings["attention_mask"], train_labels)
+    train_dataset = TensorDataset(train_input_ids, train_attention_mask, train_labels)
     train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
     return train_loader
+
 
 # Initialize Model
 output_size = 16
@@ -45,7 +44,7 @@ model = DistilBERTClassifier(bert_model, output_size).to(device)
 optimizer = optim.Adam(model.parameters(), lr=2e-5)
 criterion = nn.CrossEntropyLoss()  # ✅ Use CrossEntropyLoss
 
-train_loader = load_imdb_subset(tokenizer)
+train_loader = load_custom_dataset()
 
 # Define FL Client
 class DistilBERTClient(fl.client.NumPyClient):

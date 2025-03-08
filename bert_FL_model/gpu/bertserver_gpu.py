@@ -23,11 +23,9 @@ class DistilBERTClassifier(nn.Module):
         pooled_output = outputs.last_hidden_state[:, 0, :]
         return torch.softmax(self.classifier(pooled_output), dim=1)  # ✅ Use softmax for multi-class classification
 
-# Load Test Data
 def load_test_data(batch_size=16):
-    test_data = torch.load("test_data.pth")
-    
-    # ✅ Move test data to GPU
+    test_data = torch.load("pth_data/dataset_test.pth")
+
     test_input_ids = test_data["input_ids"].to(device)
     test_attention_mask = test_data["attention_mask"].to(device)
     test_labels = test_data["labels"].to(device)
@@ -35,6 +33,7 @@ def load_test_data(batch_size=16):
     test_dataset = TensorDataset(test_input_ids, test_attention_mask, test_labels)
     test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
     return test_loader
+
 
 # Define Evaluation Function
 def get_eval_fn(model):
