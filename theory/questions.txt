@@ -1,3 +1,0 @@
-co mam dolpnit 
-ako sylabus : psychology, explain 16 perosnlaity types, how is the perosnlity type clssified in ML/AI, examples of usage, federative leraning , description of datasets, describe models, experiments. compare federative vs single models. 
-
