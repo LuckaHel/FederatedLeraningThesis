@@ -6,23 +6,8 @@ import torch.optim as optim
 from torch.utils.data import DataLoader, TensorDataset
 from datasets import load_dataset
 
-import torch
-from transformers import DistilBertForSequenceClassification
-
-# Check CUDA availability
+# ✅ Move computations to GPU
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-print(f"Using device: {device}")
-
-# Load the model
-num_labels = 16  # Make sure this matches your dataset!
-model = DistilBertForSequenceClassification.from_pretrained("distilbert-base-uncased", num_labels=num_labels)
-
-# Move model to GPU
-model.to(device)
-
-# Confirm where the model is running
-print(f"Model is on device: {next(model.parameters()).device}")
-
 
 # Load tokenizer and model
 tokenizer = DistilBertTokenizer.from_pretrained("distilbert-base-uncased")
