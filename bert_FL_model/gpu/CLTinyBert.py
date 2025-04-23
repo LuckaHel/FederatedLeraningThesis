@@ -23,7 +23,7 @@ val_loader = DataLoader(val_dataset, batch_size=16)
 test_loader = DataLoader(test_dataset, batch_size=16)
 
 # Load TinyBERT model
-model_name = "huawei-noah/TinyBERT_General_6L_768D"
+model_name = "huawei-noah/TinyBERT_General_4L_312D"
 model = AutoModelForSequenceClassification.from_pretrained(model_name, num_labels=16)
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 
