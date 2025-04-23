@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Personality Type Finder ✨</title>
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Personality Type Finder ✨</h1>
+
+      <form id="personalityForm">
+        <label for="queryText">Enter your text:</label>
+        <textarea
+          id="queryText"
+          placeholder="Describe yourself, your thoughts, or anything... (Max 500 chars)"
+          required
+          maxlength="500"
+        ></textarea>
+        <div id="charCounter" class="char-counter">0 / 500</div>
+
+        <button type="submit" id="submitButton">
+          <span class="submit-text">Discover My Type</span>
+          <span class="loading-text">Analyzing...</span>
+        </button>
+      </form>
+
+      <!-- Status Indicators -->
+      <div id="loadingIndicator" class="loading">Processing your text...</div>
+      <div id="errorMessage" class="error"></div>
+
+      <!-- Result Display Area -->
+      <div id="resultArea" class="result-area">
+        <h2 id="resultCode"></h2>
+        <ul id="resultExplanationList">
+        </ul>
+      </div>
+    </div>
+
+    
+  </body>
+</html>

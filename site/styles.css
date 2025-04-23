@@ -1,0 +1,239 @@
+:root {
+    /* Updated Color Palette */
+    --primary-color: #5a67d8; /* Indigo */
+    --primary-color-dark: #4c51bf;
+    --secondary-color: #edf2f7; /* Lighter Gray */
+    --background-gradient-start: #f7fafc;
+    --background-gradient-end: #e2e8f0;
+    --text-color: #2d3748; /* Darker Gray */
+    --text-light: #4a5568;
+    --border-color: #cbd5e0;
+    --error-color: #e53e3e; /* Red */
+    --success-color: #38a169; /* Green */
+    --white: #ffffff;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --shadow-light: rgba(90, 103, 216, 0.2);
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI",
+      Roboto, Helvetica, Arial, sans-serif;
+    /* Subtle Gradient Background */
+    background: linear-gradient(
+      135deg,
+      var(--background-gradient-start) 0%,
+      var(--background-gradient-end) 100%
+    );
+    color: var(--text-color);
+    padding: 40px 20px; /* More padding */
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Center vertically */
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  .container {
+    background-color: var(--white);
+    padding: 40px; /* Increased padding */
+    border-radius: 12px; /* Softer corners */
+    box-shadow: 0 10px 25px -5px var(--shadow-color),
+      0 10px 10px -5px var(--shadow-color); /* Softer shadow */
+    width: 100%;
+    max-width: 650px; /* Slightly wider */
+    transition: transform 0.3s ease; /* Add subtle transition */
+  }
+
+  .container:hover {
+    transform: translateY(-5px); /* Slight lift on hover */
+  }
+
+  h1 {
+    color: var(--primary-color);
+    text-align: center;
+    margin-bottom: 35px; /* More space below title */
+    font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 10px; /* More space */
+    font-weight: 600;
+    color: var(--text-light);
+    font-size: 0.9rem;
+  }
+
+  textarea {
+    width: 100%;
+    padding: 15px; /* More padding */
+    border: 1px solid var(--border-color);
+    border-radius: 8px; /* Softer corners */
+    font-size: 1rem;
+    min-height: 100px; /* Slightly taller */
+    resize: vertical;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    font-family: inherit; /* Use Poppins */
+    line-height: 1.5;
+  }
+
+  textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px var(--shadow-light); /* Focus ring */
+  }
+
+  /* Styles for character counter */
+  .char-counter {
+    text-align: right;
+    font-size: 0.8rem;
+    color: var(--text-light);
+    margin-top: 5px;
+    margin-right: 5px;
+    transition: color 0.3s ease;
+  }
+
+  .char-counter.limit-exceeded {
+    color: var(--error-color);
+    font-weight: 600;
+  }
+
+  button {
+    background-color: var(--primary-color);
+    color: var(--white);
+    border: none;
+    padding: 15px 25px; /* Larger padding */
+    border-radius: 8px;
+    font-size: 1.05rem; /* Slightly larger font */
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease,
+      box-shadow 0.2s ease;
+    display: block;
+    width: 100%;
+    margin-top: 20px; /* More space */
+    box-shadow: 0 4px 6px -1px var(--shadow-light),
+      0 2px 4px -1px var(--shadow-light); /* Subtle shadow */
+  }
+
+  button:hover:not(:disabled) {
+    background-color: var(--primary-color-dark);
+    transform: translateY(-2px); /* Lift effect */
+    box-shadow: 0 7px 14px -3px var(--shadow-light),
+      0 4px 6px -2px var(--shadow-light); /* Enhanced shadow */
+  }
+
+  button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--shadow-light),
+      /* Keep existing shadow */ 0 4px 6px -1px var(--shadow-light),
+      0 2px 4px -1px var(--shadow-light);
+  }
+
+  button:disabled {
+    background-color: #a3bffa; /* Lighter blue when disabled */
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+
+  .result-area {
+    margin-top: 40px; /* More space */
+    padding: 25px; /* More padding */
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: #f8fafc; /* Slightly off-white */
+    /* Initially hidden & fade-in */
+    display: none;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  /* Style for when result area is shown */
+  .result-area.visible {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .result-area h2 {
+    margin-top: 0;
+    margin-bottom: 20px; /* More space */
+    text-align: center;
+    color: var(--success-color);
+    font-size: 3rem; /* Larger result code */
+    font-weight: 700;
+    letter-spacing: 6px;
+  }
+
+  .result-area ul {
+    list-style: none;
+  }
+
+  .result-area li {
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px dashed var(--border-color);
+    line-height: 1.7; /* Improve readability */
+  }
+
+  .result-area li:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .result-area strong {
+    color: var(--primary-color);
+    margin-right: 8px; /* More space */
+    font-weight: 600;
+  }
+
+  .loading,
+  .error {
+    text-align: center;
+    margin-top: 25px; /* More space */
+    font-weight: 500;
+    padding: 15px; /* More padding */
+    border-radius: 8px;
+    /* Initially hidden */
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .loading.visible,
+  .error.visible {
+    display: block;
+    opacity: 1;
+  }
+
+  .loading {
+    color: var(--text-light);
+    background-color: #e2e8f0; /* Light gray background */
+  }
+
+  .error {
+    color: #fff; /* White text on error */
+    background-color: var(--error-color); /* Red background */
+    border: none; /* Remove border, background is enough */
+  }
+
+  /* Style for button loading state */
+  button .loading-text {
+    display: none;
+  }
+  button.is-loading .submit-text {
+    display: none;
+  }
+  button.is-loading .loading-text {
+    display: inline;
+  }
