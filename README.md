@@ -22,7 +22,7 @@ A publicly accessible web version of the system is available here:
 ### Known Limitations:
 - Input is **limited to 500 characters** due to model cost and response time.
 - Only **English** is supported for accurate results.
-- The app uses the **DistilBERT model trained on a balanced dataset across 16 clients**, the best-performing configuration from the thesis.
+- The app uses the the best-performing configuration from the thesis.
 
 ---
 
